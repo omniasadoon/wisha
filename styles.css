@@ -477,8 +477,54 @@ button:hover {
 .social-links i {
   font-size: 22px;
 }
+    /* خلي الصور و النصوص تصغر */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* منتجات المتجر تتحول من صف واحد إلى أعمدة */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* السلة */
+#cart {
+  width: 95%;
+  margin: auto;
+  font-size: 14px;
+}
+
+/* الهيدر */
+header {
+  flex-wrap: wrap;
+  padding: 10px 15px;
+}
+
+.navigation ul {
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* الكتابة في الموبايل */
+h1, h2, h3, p, label {
+  font-size: clamp(14px, 4vw, 18px);
+}
+
+/* فورم الطلب */
+#order-form input, 
+#order-form select {
+  width: 100%;
+  padding: 10px;
+}
+
 
 }
+
 
 
 
