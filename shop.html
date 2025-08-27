@@ -85,12 +85,68 @@
   </div>
 
   <!-- 🛒 السلة -->
-  <div id="cart">
-    <h4>🛒 Cart</h4>
-    <ul id="cart-items"></ul>
-    <p>Total: <span id="total">0</span> IQD</p>
-    <p>Delivery: <span id="shipping">5000</span> IQD</p>
-    <p><b>Final total: <span id="final-total">0</span> IQD</b></p>
+  <script>
+  let cart = []; // مصفوفة تخزن المنتجات
+  let delivery = 5000;
+
+  // دالة إضافة منتج للسلة
+  function addToCart(name, price) {
+    cart.push({name, price});
+    renderCart();
+  }
+
+  // تحديث السلة
+  function renderCart() {
+    let cartItems = document.getElementById("cart-items");
+    let totalEl = document.getElementById("total");
+    let finalTotalEl = document.getElementById("final-total");
+    let giftMsg = document.getElementById("gift-message");
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+    cart.forEach((item, index) => {
+      let li = document.createElement("li");
+      li.textContent = `${item.name} - ${item.price} IQD `;
+      
+      // زر حذف
+      let delBtn = document.createElement("button");
+      delBtn.textContent = "❌";
+      delBtn.style.marginLeft = "10px";
+      delBtn.onclick = () => { 
+        cart.splice(index,1);
+        renderCart();
+      };
+      li.appendChild(delBtn);
+
+      cartItems.appendChild(li);
+      total += item.price;
+    });
+
+    totalEl.textContent = total;
+    finalTotalEl.textContent = total + delivery;
+
+    // إظهار هدية إذا السعر فوق 60,000
+    if(total > 60000){
+      giftMsg.style.display = "block";
+    } else {
+      giftMsg.style.display = "none";
+    }
+  }
+
+  // تحديث التوصيل حسب المحافظة
+  function updateShipping(){
+    let province = document.getElementById("province").value;
+    if(province === "Baghdad"){
+      delivery = 5000;
+    } else {
+      delivery = 10000;
+    }
+    document.getElementById("shipping").textContent = delivery;
+    renderCart();
+  }
+</script>
+
 
     <!-- رمز ترويجي -->
     <input type="text" id="promo" placeholder="Enter coupon code">
@@ -157,7 +213,7 @@ function sendPromo(){
       </label><br><br>
       <label>المنطقة: <input type="text" required></label><br><br>
       <label>نقطة دالة: <input type="text" required></label><br><br>
-      <lable >phone number: <span>+964</span>  <input type="tel" required pattern="[0-9]{9}" maxlength="11" placeholder="xxxxxxxxx"></label>
+      <label >phone number: <span>+964</span>  <input type="tel" required pattern="[0-9]{11}" maxlength="11" placeholder="07XXXXXXXXX"></label>
       <button type="submit">submit</button>
     </form><br><br> <hr>
     <!-- حقل رفع صورة للبنترست -->
@@ -219,4 +275,5 @@ function sendPromo(){
 
   <br>
   <script src="shop.js"></script>
+
   <a href="wishmary.html">⬅️ back</a></body> </html>
